@@ -1,0 +1,15 @@
+<div class="article-form article__form">
+    <form [formGroup]="articleForm" novalidate (ngSubmit)="submit()">
+        <div class="article-form__item">
+            <label for="title">Title</label>
+            <textarea class="article-form__control" name="title" formControlName="articleTitle">
+            </textarea>
+        </div>
+        <div class="article-form__item">
+            <label for="content">Content</label>
+            <textarea class="article-form__control" name="content" formControlName="articleContent">
+            </textarea>
+        </div>
+        <button class="article-form__btn" [disabled]="articleForm.invalid">Submit</button>
+    </form>
+</div>

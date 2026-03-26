@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="title">
+    <h1 class="h1">Articles List</h1>
+  </div>
+  <div class="main">
+     <div class="content"
+    ><table
+      class="table"
+    >
+      <thead class="table__thead">
+        <tr class="table-tr">
+           <th class="table-th">Id</th>
+           <th class="table-th">Title</th>
+        </tr> 
+      </thead>
+      <tbody class="table__tbody">
+        <ng-container *ngIf="list$ | async as list">
+          <ng-container *ngFor="let article of list">
+            <tr [item]="article" app-table-row-item>{{ article.title }}</tr>
+          </ng-container>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+  <div class="article">
+    <app-article/>
+  </div>
+  </div>
+</div>  
