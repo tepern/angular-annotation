@@ -14,9 +14,10 @@
         </tr> 
       </thead>
       <tbody class="table__tbody">
-        <ng-container *ngIf="list$ | async as list">
+        <ng-container *ngIf="(resultList$ | async) as list">
           <ng-container *ngFor="let article of list">
-            <tr [item]="article" app-table-row-item>{{ article.title }}</tr>
+            <tr [item]="article" app-table-row-item>
+            </tr>
           </ng-container>
         </ng-container>
       </tbody>

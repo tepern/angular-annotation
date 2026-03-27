@@ -1,0 +1,16 @@
+:host {
+    cursor: pointer;
+}
+.article {
+  &__id {
+    max-width: 100px;
+    padding: 5px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  &__title {
+    word-wrap: break-word;
+  }
+}

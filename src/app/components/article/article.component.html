@@ -13,3 +13,10 @@
         <button class="article-form__btn" [disabled]="articleForm.invalid">Submit</button>
     </form>
 </div>
+<ng-container *ngIf="(article$ | async) as article">
+  <div class="article-detail">
+    <h3>{{ article.id }}</h3>
+    <h2>{{ article.title }}</h2>
+    <div class="article-detail__content">{{ article.title }}</div>
+  </div>
+</ng-container>
