@@ -1,5 +1,14 @@
 :host {
     cursor: pointer;
+
+    &:hover {
+        background-color: rgba(0,0,0,0.1);
+        .article {
+            &__btn {
+                visibility: visible;
+            }
+        }
+    }
 }
 .article {
   &__id {
@@ -12,5 +21,40 @@
 
   &__title {
     word-wrap: break-word;
+  }
+
+  &__btn {
+    position: relative;
+    width: 10px;
+    height: 10px;
+    visibility: hidden;
+    cursor: pointer;
+    vertical-align: top;
+    border: none;
+    box-shadow: 0 0 1px 1px rgba(0,0,0,0.2);
+
+    &::after {
+      position: absolute;  
+      width: 100%;
+      height: 1px;
+      top: 50%;
+      left: 0;  
+      display: block;
+      transform: rotate(45deg);
+      background: red;
+      content: "";
+    }
+
+    &::before {
+      position: absolute;  
+      width: 100%;
+      height: 1px;
+      top: 50%;
+      left: 0;  
+      display: block;
+      transform: rotate(-45deg);
+      background: red;
+      content: "";
+    }
   }
 }

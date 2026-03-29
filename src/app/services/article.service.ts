@@ -18,5 +18,6 @@ export class ArticleService {
 
   public deleteById(id: string) {
     this.localStorageService.deleteId(id);
+    this.article$.next(null);
   }
 }

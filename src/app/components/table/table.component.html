@@ -16,7 +16,7 @@
       <tbody class="table__tbody">
         <ng-container *ngIf="(resultList$ | async) as list">
           <ng-container *ngFor="let article of list">
-            <tr [item]="article" app-table-row-item>
+            <tr [item]="article" app-table-row-item (click)="open(article.id)" (onDel)="onDel($event)">
             </tr>
           </ng-container>
         </ng-container>

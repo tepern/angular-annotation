@@ -9,13 +9,13 @@ import { BehaviorSubject } from 'rxjs';
 @Component({
   selector: 'app-article',
   imports: [FormsModule, ReactiveFormsModule, CommonModule],
-  providers: [ArticleService],
   templateUrl: './article.component.html',
   styleUrl: './article.component.scss'
 })
 export class ArticleComponent {
-  public readonly articleForm: FormGroup;
+  protected readonly articleForm: FormGroup;
   protected readonly article$: BehaviorSubject<IArticle|null> = new BehaviorSubject<IArticle|null>(null);
+  protected edit: boolean = false;
   constructor(private localStorage: LocalStorageService, private articleService: ArticleService) {
     this.articleForm = new FormGroup({
       "articleTitle": new FormControl('New article', Validators.required),
@@ -24,9 +24,9 @@ export class ArticleComponent {
     this.article$ = this.articleService.article$;
   }
 
-  public submit() {
+  protected submit() {
     const article: IArticle = {
-      id: crypto.randomUUID(),
+      id: this.articleForm.controls.id ? this.articleForm.controls.id.value : crypto.randomUUID(),
       title: this.articleForm.controls.articleTitle.value,
       content: this.articleForm.controls.articleContent.value
     }
@@ -34,6 +34,20 @@ export class ArticleComponent {
     this.localStorage.setIds(article.id);
     this.localStorage.setList();
     this.articleForm.controls.articleContent.reset();
+    this.edit = false;
+  }
+
+  protected editArticle(article: IArticle) {
+    this.edit = true;
+    this.articleForm.patchValue({
+      id: article.id,
+      articleTitle: article.title,
+      articleContent: article.content
+    })
+  }
+
+  protected cancel() {
+    this.edit = false;
   }
 }
 

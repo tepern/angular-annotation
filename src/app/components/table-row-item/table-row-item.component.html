@@ -1,2 +1,3 @@
 <td class="article__id">{{ item.id }}</td>
 <td class="article__title">{{ item.title }}</td>
+<td><button class="article__btn" (click)="del(item.id); $event.stopPropagation()"></button></td>

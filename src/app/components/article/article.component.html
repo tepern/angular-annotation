@@ -1,22 +1,76 @@
-<div class="article-form article__form">
+<ng-container *ngIf="!(article$ | async) as article">
+  <div class="article-form article__form">
     <form [formGroup]="articleForm" novalidate (ngSubmit)="submit()">
-        <div class="article-form__item">
-            <label for="title">Title</label>
-            <textarea class="article-form__control" name="title" formControlName="articleTitle">
-            </textarea>
-        </div>
-        <div class="article-form__item">
-            <label for="content">Content</label>
-            <textarea class="article-form__control" name="content" formControlName="articleContent">
-            </textarea>
-        </div>
-        <button class="article-form__btn" [disabled]="articleForm.invalid">Submit</button>
+      <div class="article-form__item">
+        <label for="title">Title</label>
+        <textarea
+          class="article-form__control"
+          name="title"
+          formControlName="articleTitle"
+        >
+        </textarea>
+      </div>
+      <div class="article-form__item">
+        <label for="content">Content</label>
+        <textarea
+          class="article-form__control"
+          name="content"
+          formControlName="articleContent"
+        >
+        </textarea>
+      </div>
+      <button class="article-form__btn" [disabled]="articleForm.invalid">
+        Submit
+      </button>
     </form>
-</div>
-<ng-container *ngIf="(article$ | async) as article">
-  <div class="article-detail">
-    <h3>{{ article.id }}</h3>
-    <h2>{{ article.title }}</h2>
-    <div class="article-detail__content">{{ article.title }}</div>
+  </div>
+</ng-container>
+<ng-container *ngIf="article$ | async as article">
+  <ng-container *ngIf="article !== null && !edit">
+    <div class="article-detail">
+      <div class="article-detail__header">
+        <h2>{{ article.title }}</h2>
+        <h5>
+          id:
+          <span class="article-detail__span"
+            ><u>{{ article.id }}</u>
+            </span>
+        </h5>
+       </div>
+      <div class="article-detail__content">{{ article.content }}</div>
+      <button class="article-form__btn" (click)="editArticle(article)">
+        Edit
+      </button>
+    </div>
+  </ng-container>
+</ng-container>
+<ng-container *ngIf="edit && (article$ | async) as article">
+  <div class="article-form article__form">
+    <form [formGroup]="articleForm" novalidate (ngSubmit)="submit()">
+      <div class="article-form__item">
+        <label for="title">Title</label>
+        <textarea
+          class="article-form__control"
+          name="title"
+          formControlName="articleTitle"
+        >
+        </textarea>
+      </div>
+      <div class="article-form__item">
+        <label for="content">Content</label>
+        <textarea
+          class="article-form__control"
+          name="content"
+          formControlName="articleContent"
+        >
+        </textarea>
+      </div>
+      <button type="button" class="article-form__btn" (click)="cancel()">
+        Cancel
+      </button>
+      <button class="article-form__btn" [disabled]="articleForm.invalid">
+        Submit
+      </button>
+    </form>
   </div>
 </ng-container>

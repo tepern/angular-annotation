@@ -58,14 +58,14 @@ export class LocalStorageService {
   }
 
   public updateList(article: IArticle) {
-    console.log('vvv', article);
     this.item$.next(article);
     this.item$.getValue();
   }
 
   public deleteId(id: string) {
     const ids = this.getIds();
-    const newIds = ids?.filter((item)=>item! == id);
+    const newIds = ids?.filter((item)=>item !== id);
     localStorage.setItem('article', JSON.stringify(newIds));
+    this.setList();
   }
 }

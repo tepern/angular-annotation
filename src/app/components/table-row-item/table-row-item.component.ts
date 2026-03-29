@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IArticle } from '../../models/article';
 
 @Component({
@@ -9,4 +9,8 @@ import { IArticle } from '../../models/article';
 })
 export class TableRowItemComponent {
   @Input() item: any;
+  @Output() onDel = new EventEmitter<string>();
+  public del(id: string) {
+    this.onDel.emit(id);
+  }
 }
