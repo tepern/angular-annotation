@@ -3,28 +3,30 @@
     <h1 class="h1">Articles List</h1>
   </div>
   <div class="main">
-     <div class="content"
-    ><table
-      class="table"
-    >
-      <thead class="table__thead">
-        <tr class="table-tr">
-           <th class="table-th">Id</th>
-           <th class="table-th">Title</th>
-        </tr> 
-      </thead>
-      <tbody class="table__tbody">
-        <ng-container *ngIf="(resultList$ | async) as list">
-          <ng-container *ngFor="let article of list">
-            <tr [item]="article" app-table-row-item (click)="open(article.id)" (onDel)="onDel($event)">
-            </tr>
+    <div class="content">
+      <table class="table">
+        <thead class="table__thead">
+          <tr class="table-tr">
+            <th class="table-th">Id</th>
+            <th class="table-th">Title</th>
+          </tr>
+        </thead>
+        <tbody class="table__tbody">
+          <ng-container *ngIf="resultList$ | async as list">
+            <ng-container *ngFor="let article of list">
+              <tr
+                [item]="article"
+                app-table-row-item
+                (click)="open(article.id)"
+                (onDel)="onDel($event)"
+              ></tr>
+            </ng-container>
           </ng-container>
-        </ng-container>
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </div>
+    <div class="article">
+      <app-article />
+    </div>
   </div>
-  <div class="article">
-    <app-article/>
-  </div>
-  </div>
-</div>  
+</div>

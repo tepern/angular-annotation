@@ -33,11 +33,10 @@
         <h2>{{ article.title }}</h2>
         <h5>
           id:
-          <span class="article-detail__span"
-            ><u>{{ article.id }}</u>
-            </span>
+          <span class="article-detail__span"><u>{{ article.id }}</u>
+          </span>
         </h5>
-       </div>
+      </div>
       <div class="article-detail__content">{{ article.content }}</div>
       <button class="article-form__btn" (click)="editArticle(article)">
         Edit
@@ -70,7 +69,11 @@
       <button type="button" class="article-form__btn" (click)="cancel()">
         Cancel
       </button>
-      <button type="submit" class="article-form__btn" [disabled]="articleForm.invalid">
+      <button
+        type="submit"
+        class="article-form__btn"
+        [disabled]="articleForm.invalid"
+      >
         Submit
       </button>
     </form>
