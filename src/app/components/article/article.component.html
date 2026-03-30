@@ -16,6 +16,7 @@
           class="article-form__control"
           name="content"
           formControlName="articleContent"
+          (mouseover)="selection()"
         >
         </textarea>
       </div>
@@ -62,13 +63,14 @@
           class="article-form__control"
           name="content"
           formControlName="articleContent"
+          (mouseover)="selection()"
         >
         </textarea>
       </div>
       <button type="button" class="article-form__btn" (click)="cancel()">
         Cancel
       </button>
-      <button class="article-form__btn" [disabled]="articleForm.invalid">
+      <button type="submit" class="article-form__btn" [disabled]="articleForm.invalid">
         Submit
       </button>
     </form>

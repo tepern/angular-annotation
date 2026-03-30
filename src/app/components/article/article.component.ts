@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, Inject } from '@angular/core';
+import { CommonModule, DOCUMENT } from '@angular/common';
 import { Form, ReactiveFormsModule, FormGroup, FormControl, Validators, FormsModule } from '@angular/forms';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { IArticle } from '../../models/article';
@@ -16,7 +16,7 @@ export class ArticleComponent {
   protected readonly articleForm: FormGroup;
   protected readonly article$: BehaviorSubject<IArticle|null> = new BehaviorSubject<IArticle|null>(null);
   protected edit: boolean = false;
-  constructor(private localStorage: LocalStorageService, private articleService: ArticleService) {
+  constructor(@Inject(DOCUMENT) private document: Document, private localStorage: LocalStorageService, private articleService: ArticleService) {
     this.articleForm = new FormGroup({
       "articleTitle": new FormControl('New article', Validators.required),
       "articleContent": new FormControl('', Validators.maxLength(500)),
@@ -48,6 +48,14 @@ export class ArticleComponent {
 
   protected cancel() {
     this.edit = false;
+  }
+
+  protected selection() {
+    const selection = this.document.getSelection();
+    if (selection && selection.rangeCount > 0) {
+      console.log('test', selection);
+    }
+    
   }
 }
 
