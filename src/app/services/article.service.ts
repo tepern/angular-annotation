@@ -4,12 +4,13 @@ import { BehaviorSubject } from 'rxjs';
 import { IArticle } from '../models/article';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ArticleService {
-  public readonly article$: BehaviorSubject<IArticle|null> = new BehaviorSubject<IArticle|null>(null);
+  public readonly article$: BehaviorSubject<IArticle | null> =
+    new BehaviorSubject<IArticle | null>(null);
 
-  constructor(private localStorageService: LocalStorageService) { }
+  constructor(private localStorageService: LocalStorageService) {}
 
   public getById(id: string) {
     const article = this.localStorageService.getItem(id);

@@ -37,10 +37,18 @@
           </span>
         </h5>
       </div>
-      <div class="article-detail__content">{{ article.content }}</div>
+      <div class="article-detail__content" (mouseup)="selection()">{{ article.content }}</div>
       <button class="article-form__btn" (click)="editArticle(article)">
         Edit
       </button>
+      <ng-container *ngIf="annotate()">
+        <button type="button" class="article-form__btn" (click)="annotateFragment()">
+          Annotate
+        </button>
+      </ng-container>
+      <ng-container *ngIf="fragment && showAnnotationForm() && (article$ | async)">
+        <app-annotation [fragment]="fragment"></app-annotation>
+      </ng-container>
     </div>
   </ng-container>
 </ng-container>
@@ -79,3 +87,4 @@
     </form>
   </div>
 </ng-container>
+<ng-container *ngIf="annotate()"></ng-container>

@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, effect, Inject, signal } from '@angular/core';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import {
   ReactiveFormsModule,
@@ -10,11 +10,23 @@ import {
 import { LocalStorageService } from '../../services/local-storage.service';
 import { IArticle } from '../../models/article';
 import { ArticleService } from '../../services/article.service';
-import { BehaviorSubject } from 'rxjs';
+import { AnnotationComponent } from '../annotation/annotation.component';
+import {
+  BehaviorSubject,
+  distinctUntilChanged,
+  filter,
+  Observable,
+  tap,
+} from 'rxjs';
 
 @Component({
   selector: 'app-article',
-  imports: [FormsModule, ReactiveFormsModule, CommonModule],
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    CommonModule,
+    AnnotationComponent,
+  ],
   templateUrl: './article.component.html',
   styleUrl: './article.component.scss',
 })
@@ -23,6 +35,9 @@ export class ArticleComponent {
   protected readonly article$: BehaviorSubject<IArticle | null> =
     new BehaviorSubject<IArticle | null>(null);
   protected edit: boolean = false;
+  protected annotate = signal<boolean>(false);
+  protected showAnnotationForm = signal<boolean>(false);
+  public fragment: Selection | null = null;
   constructor(
     @Inject(DOCUMENT) private document: Document,
     private localStorage: LocalStorageService,
@@ -33,6 +48,13 @@ export class ArticleComponent {
       articleContent: new FormControl('', Validators.maxLength(500)),
     });
     this.article$ = this.articleService.article$;
+    effect(() => console.log(this.annotate()));
+    this.article$.pipe(
+      distinctUntilChanged(),
+      tap(() => {
+        this.annotate.set(false);
+      }),
+    );
   }
 
   protected submit() {
@@ -43,7 +65,7 @@ export class ArticleComponent {
       title: this.articleForm.controls.articleTitle.value,
       content: this.articleForm.controls.articleContent.value,
     };
-    this.localStorage.setItem(article.id, article);
+    this.localStorage.setItem<IArticle>(article.id, article);
     this.localStorage.setIds(article.id);
     this.localStorage.setList();
     this.articleForm.controls.articleContent.reset();
@@ -61,12 +83,20 @@ export class ArticleComponent {
 
   protected cancel() {
     this.edit = false;
+    this.annotate.set(false);
   }
 
   protected selection() {
     const selection = this.document.getSelection();
-    if (selection && selection.rangeCount > 0) {
-      console.log('test', selection);
+    if (selection && !selection.isCollapsed) {
+      this.annotate.set(true);
+      this.fragment = selection;
+    } else {
+      this.annotate.set(false);
     }
+  }
+
+  protected annotateFragment() {
+    this.showAnnotationForm.set(true);
   }
 }
